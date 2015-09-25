@@ -10,7 +10,7 @@ public class DroneChase : BaseState<Drone>
 
 	public override void Update()
 	{
-		if (NPC.TargetDistanceSqr >= NPC.SqrFindTargetRadius)
+		if (NPC.TargetDistanceSqr >= NPC.SqrLoseTargetRadius)
 		{
 			NPC.State = new DroneIdle(NPC);
 		}

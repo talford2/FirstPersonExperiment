@@ -21,6 +21,8 @@ public class Drone : MonoBehaviour
 
 	public float FindTargetRadius = 20f;
 
+	public float LoseTargetRadius = 30f;
+
 	public float ChaseSpeed = 2;
 
 	public float SqrFindTargetRadius
@@ -28,6 +30,14 @@ public class Drone : MonoBehaviour
 		get
 		{
 			return Mathf.Pow(FindTargetRadius, 2f);
+		}
+	}
+
+	public float SqrLoseTargetRadius
+	{
+		get
+		{
+			return Mathf.Pow(LoseTargetRadius, 2f);
 		}
 	}
 
