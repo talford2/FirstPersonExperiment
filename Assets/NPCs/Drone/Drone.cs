@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Targetable))]
 public class Drone : MonoBehaviour
 {
+	private int team;
+
 	public BaseState<Drone> State { get; set; }
 
-	private int team;
 	public int Team
 	{
 		get
@@ -15,6 +17,16 @@ public class Drone : MonoBehaviour
 
 	public Transform Target;
 
+	#region State Speeds
+
+	public float AttackCruiseSpeed = 0.5f;
+
+	public float ChaseSpeed = 2f;
+
+	#endregion
+
+	#region Radius Distances
+
 	public float FindTargetRadius = 20f;
 
 	public float LoseTargetRadius = 30f;
@@ -23,9 +35,9 @@ public class Drone : MonoBehaviour
 
 	public float AttackStopRadius = 3f;
 
-	public float AttackCruiseSpeed = 0.5f;
+	#endregion
 
-	public float ChaseSpeed = 2f;
+	#region Radius Distances Squared
 
 	public float SqrTargetDistance
 	{
@@ -59,6 +71,10 @@ public class Drone : MonoBehaviour
 		get { return Mathf.Pow(AttackStopRadius, 2); }
 	}
 
+	#endregion
+
+	#region Private Methods
+
 	private void Awake()
 	{
 		team = GetComponent<Targetable>().Team;
@@ -80,4 +96,6 @@ public class Drone : MonoBehaviour
 	{
 		TargetingUtility.RemoveTarget(team, transform);
 	}
+
+	#endregion
 }
