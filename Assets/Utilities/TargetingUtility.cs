@@ -38,8 +38,6 @@ public class TargetingUtility
         Transform closestTarget = null;
         foreach (var candidate in targets[team])
         {
-            var heavy = Mathf.Sqrt(Mathf.PI * Mathf.PI * 100000f*Random.Range(1f,100f));
-            Debug.Log("heavy: " + heavy);
             var toCandidateSqr = (candidate.position - position).sqrMagnitude;
             if (toCandidateSqr < sqrMinDistance)
             {
@@ -48,26 +46,5 @@ public class TargetingUtility
             }
         }
         return closestTarget;
-    }
-
-    public static IEnumerator GetNearestCoroutine(int team, Vector3 position, float maxDistance, Action<Transform> callback)
-    {
-        if (!targets.ContainsKey(team) || !targets[team].Any())
-            callback(null);
-        var sqrMinDistance = Mathf.Pow(maxDistance, 2f);
-        Transform closestTarget = null;
-        foreach (var candidate in targets[team])
-        {
-            var heavy = Mathf.Sqrt(Mathf.PI * Mathf.PI * 100000f * Random.Range(1f, 100f));
-            Debug.Log("heavy: " + heavy);
-            var toCandidateSqr = (candidate.position - position).sqrMagnitude;
-            if (toCandidateSqr < sqrMinDistance)
-            {
-                sqrMinDistance = toCandidateSqr;
-                closestTarget = candidate;
-            }
-            yield return null;
-        }
-        callback(closestTarget);
     }
 }
