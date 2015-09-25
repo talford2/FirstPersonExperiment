@@ -20,23 +20,26 @@ public class TargetingUtility
         targets[team].Remove(transform);
     }
 
+    public static int GetOpposingTeam(int team)
+    {
+        if (team == 1)
+            return 2;
+        return 1;
+    }
+
     public static Transform GetNearest(int team, Vector3 position, float maxDistance)
     {
         if (!targets.ContainsKey(team) || !targets[team].Any())
             return null;
-        var sqrMaxDistance = Mathf.Pow(maxDistance, 2f);
-        var sqrMinDistance = Mathf.Infinity;
+        var sqrMinDistance = Mathf.Pow(maxDistance, 2f);
         Transform closestTarget = null;
         foreach (var candidate in targets[team])
         {
             var toCandidateSqr = (candidate.position - position).sqrMagnitude;
-            if (toCandidateSqr < sqrMaxDistance)
+            if (toCandidateSqr < sqrMinDistance)
             {
-                if (toCandidateSqr < sqrMinDistance)
-                {
-                    sqrMinDistance = toCandidateSqr;
-                    closestTarget = candidate;
-                }
+                sqrMinDistance = toCandidateSqr;
+                closestTarget = candidate;
             }
         }
         return closestTarget;
