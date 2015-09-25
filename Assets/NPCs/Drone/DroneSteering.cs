@@ -16,6 +16,12 @@ public class DroneSteering : BaseSteering<Drone>
         return avoidSum;
     }
 
+    public Vector3 SeekForce(Vector3 position)
+    {
+        var toPosition = position - npc.transform.position;
+        return toPosition;
+    }
+
     public DroneSteering(Drone npc) : base(npc)
     {
         this.npc = npc;

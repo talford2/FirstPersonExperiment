@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(Targetable))]
 public class Drone : MonoBehaviour
@@ -73,12 +74,22 @@ public class Drone : MonoBehaviour
 
 	#endregion
 
-	#region Private Methods
+    #region Detected Objects
 
-	private void Awake()
+    public List<Vector3> Obstacles { get; set; }
+
+    #endregion
+
+    public DroneSteering Steering;
+
+    #region Private Methods
+
+    private void Awake()
 	{
 		team = GetComponent<Targetable>().Team;
 		TargetingUtility.AddTarget(team, transform);
+        Obstacles = new List<Vector3>();
+        Steering = new DroneSteering(this);
 	}
 
 	private void Start()

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class DroneChase : BaseState<Drone>
 {
@@ -8,6 +7,17 @@ public class DroneChase : BaseState<Drone>
 		Debug.Log("Chase");
 	}
 
+    private Vector3 GetSteeringForce()
+    {
+        var steerForce = Vector3.zero;
+
+        steerForce += NPC.Steering.ObstaclesAvoidForce(NPC.Obstacles);
+
+        steerForce += 0.1f*NPC.Steering.SeekForce(NPC.Target.position);
+
+        return steerForce.normalized;
+    }
+    
 	public override void Update()
 	{
 		// Target is too far away lose target
@@ -20,7 +30,8 @@ public class DroneChase : BaseState<Drone>
 		if (NPC.Target != null)
 		{
 			NPC.transform.LookAt(NPC.Target);
-			NPC.transform.position += NPC.transform.forward * NPC.ChaseSpeed * Time.deltaTime;
+		    NPC.transform.position += GetSteeringForce()*NPC.ChaseSpeed*Time.deltaTime;
+			//NPC.transform.position += NPC.transform.forward * NPC.ChaseSpeed * Time.deltaTime;
 
 			if (NPC.SqrTargetDistance <= NPC.SqrAttackRadius)
 			{
