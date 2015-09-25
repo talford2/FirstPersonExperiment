@@ -27,7 +27,7 @@ public class DroneIdle : BaseState<Drone>
 		Debug.Log("Starting looking for dude");
 		IsSearchingForTarget = true;
 		yield return new WaitForSeconds(delay);
-		NPC.Target = TargetingUtility.GetNearest(NPC.Team, NPC.transform.position, NPC.SqrFindTargetRadius);
+		NPC.Target = TargetingUtility.GetNearest(TargetingUtility.GetOpposingTeam(NPC.Team), NPC.transform.position, NPC.SqrFindTargetRadius);
 		IsSearchingForTarget = false;
 		Debug.Log(NPC.name + " => " + NPC.Target.name);
 	}
