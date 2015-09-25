@@ -1,24 +1,33 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Player : MonoBehaviour
 {
-	void Start()
-	{
-		current = this;
-	}
+    public int Team;
 
-	void Update()
-	{
+    private void Awake()
+    {
+        TargetingUtility.AddTarget(Team, transform);
+    }
 
-	}
+    private void Start()
+    {
+        current = this;
+    }
 
-	private static Player current;
-	public static Player Current
-	{
-		get
-		{
-			return current;
-		}
-	}
+    private void Update()
+    {
+
+    }
+
+    private static Player current;
+
+    public static Player Current
+    {
+        get { return current; }
+    }
+
+    private void OnDestroy()
+    {
+        TargetingUtility.RemoveTarget(Team, transform);
+    }
 }
