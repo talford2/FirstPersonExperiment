@@ -10,10 +10,13 @@ public class DroneChase : BaseState<Drone>
 
 	public override void Update()
 	{
+		// Target is too far away lose target
 		if (NPC.TargetDistanceSqr >= NPC.SqrLoseTargetRadius)
 		{
+			NPC.Target = null;
 			NPC.State = new DroneIdle(NPC);
 		}
+
 		if (NPC.Target != null)
 		{
 			NPC.transform.LookAt(NPC.Target);

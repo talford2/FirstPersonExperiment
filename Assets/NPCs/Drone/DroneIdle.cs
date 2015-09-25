@@ -12,7 +12,9 @@ public class DroneIdle : BaseState<Drone>
 	{
 		if (NPC.Target == null)
 		{
-			if (NPC.TargetDistanceSqr <= NPC.SqrFindTargetRadius)
+			// Find target
+			var playerDistSqr = (Player.Current.transform.position - NPC.transform.position).sqrMagnitude;
+			if (playerDistSqr <= NPC.SqrFindTargetRadius)
 			{
 				NPC.Target = Player.Current.transform;
 				NPC.State = new DroneChase(NPC);
