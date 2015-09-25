@@ -6,12 +6,16 @@ public class Drone : MonoBehaviour
 	public BaseState<Drone> State { get; set; }
 
 	public Transform Target;
-	
+
 	public float FindTargetRadius = 20f;
 
 	public float LoseTargetRadius = 30f;
 
 	public float AttackRadius = 5f;
+
+	public float AttackStopRadius = 3f;
+
+	public float AttackCruiseSpeed = 0.5f;
 
 	public float ChaseSpeed = 2f;
 
@@ -48,6 +52,14 @@ public class Drone : MonoBehaviour
 		get
 		{
 			return Mathf.Pow(AttackRadius, 2f);
+		}
+	}
+
+	public float SqrAttackStopRadius
+	{
+		get
+		{
+			return Mathf.Pow(AttackStopRadius, 2);
 		}
 	}
 
