@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TargetingUtility
 {
@@ -37,6 +38,8 @@ public class TargetingUtility
         Transform closestTarget = null;
         foreach (var candidate in targets[team])
         {
+            var heavy = Mathf.Sqrt(Mathf.PI * Mathf.PI * 100000f*Random.Range(1f,100f));
+            Debug.Log("heavy: " + heavy);
             var toCandidateSqr = (candidate.position - position).sqrMagnitude;
             if (toCandidateSqr < sqrMinDistance)
             {
@@ -55,6 +58,8 @@ public class TargetingUtility
         Transform closestTarget = null;
         foreach (var candidate in targets[team])
         {
+            var heavy = Mathf.Sqrt(Mathf.PI * Mathf.PI * 100000f * Random.Range(1f, 100f));
+            Debug.Log("heavy: " + heavy);
             var toCandidateSqr = (candidate.position - position).sqrMagnitude;
             if (toCandidateSqr < sqrMinDistance)
             {
