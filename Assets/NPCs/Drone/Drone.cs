@@ -6,8 +6,16 @@ public class Drone : MonoBehaviour
 	public BaseState<Drone> State { get; set; }
 
 	public Transform Target;
+	
+	public float FindTargetRadius = 20f;
 
-	public float TargetDistanceSqr
+	public float LoseTargetRadius = 30f;
+
+	public float AttackRadius = 5f;
+
+	public float ChaseSpeed = 2f;
+
+	public float SqrTargetDistance
 	{
 		get
 		{
@@ -18,12 +26,6 @@ public class Drone : MonoBehaviour
 			return (Target.transform.position - transform.position).sqrMagnitude;
 		}
 	}
-
-	public float FindTargetRadius = 20f;
-
-	public float LoseTargetRadius = 30f;
-
-	public float ChaseSpeed = 2;
 
 	public float SqrFindTargetRadius
 	{
@@ -38,6 +40,14 @@ public class Drone : MonoBehaviour
 		get
 		{
 			return Mathf.Pow(LoseTargetRadius, 2f);
+		}
+	}
+
+	public float SqrAttackRadius
+	{
+		get
+		{
+			return Mathf.Pow(AttackRadius, 2f);
 		}
 	}
 
