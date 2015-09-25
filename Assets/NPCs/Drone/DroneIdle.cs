@@ -16,8 +16,8 @@ public class DroneIdle : BaseState<Drone>
 		{
 			NPC.StartCoroutine(GetNewTarget(1f));
 
-			if (NPC.Target != null)
-				NPC.State = new DroneChase(NPC);
+			//if (NPC.Target != null)
+				//NPC.State = new DroneChase(NPC);
 		}
 		base.Update();
 	}
@@ -28,10 +28,13 @@ public class DroneIdle : BaseState<Drone>
 		IsSearchingForTarget = true;
 		yield return new WaitForSeconds(delay);
 		NPC.Target = TargetingUtility.GetNearest(TargetingUtility.GetOpposingTeam(NPC.Team), NPC.transform.position, NPC.FindTargetRadius);
+		
+
 		IsSearchingForTarget = false;
 		if (NPC.Target != null)
 		{
 			Debug.Log(NPC.name + " => " + NPC.Target.name);
+			NPC.State = new DroneChase(NPC);
 		}
 		else
 		{
