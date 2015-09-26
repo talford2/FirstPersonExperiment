@@ -2,20 +2,38 @@
 
 public class DroneChase : BaseState<Drone>
 {
+    private Vector3 destination;
+
 	public DroneChase(Drone npc) : base(npc)
 	{
 		Debug.Log("Chase");
+	    npc.MaxSpeed = npc.ChaseSpeed;
 	}
 
     private Vector3 GetSteeringForce()
     {
+        var sqrMaxSpeed = NPC.MaxSpeed*NPC.MaxSpeed;
         var steerForce = Vector3.zero;
 
+        // Destination to 5m in front of target
+        var toTarget = NPC.Target.position - NPC.transform.position;
+        destination = NPC.Target.position - 5f * toTarget.normalized;
+
+        /*
         steerForce += NPC.Steering.ObstaclesAvoidForce(NPC.Obstacles);
+        if (steerForce.sqrMagnitude > sqrMaxSpeed)
+            return steerForce.normalized*NPC.MaxSpeed;
+        */
 
-        steerForce += 0.1f*NPC.Steering.SeekForce(NPC.Target.position);
+        steerForce += NPC.Steering.ArriveForce(destination);
+        if (steerForce.sqrMagnitude > sqrMaxSpeed)
+            return steerForce.normalized * NPC.MaxSpeed;
 
-        return steerForce.normalized;
+        steerForce += NPC.Steering.SeekForce(destination);
+        if (steerForce.sqrMagnitude > sqrMaxSpeed)
+            return steerForce.normalized * NPC.MaxSpeed;
+
+        return steerForce;
     }
     
 	public override void Update()
@@ -29,8 +47,9 @@ public class DroneChase : BaseState<Drone>
 
 		if (NPC.Target != null)
 		{
-			NPC.transform.LookAt(NPC.Target);
-		    NPC.transform.position += GetSteeringForce()*NPC.ChaseSpeed*Time.deltaTime;
+			//NPC.transform.LookAt(NPC.Target);
+		    NPC.Velocity = GetSteeringForce();
+		    NPC.transform.position += NPC.Velocity*Time.deltaTime;
 			//NPC.transform.position += NPC.transform.forward * NPC.ChaseSpeed * Time.deltaTime;
 
 			if (NPC.SqrTargetDistance <= NPC.SqrAttackRadius)

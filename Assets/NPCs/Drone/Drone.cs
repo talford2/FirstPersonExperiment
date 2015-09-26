@@ -28,6 +28,9 @@ public class Drone : MonoBehaviour
 
 	public float ChaseSpeed = 2f;
 
+    public Vector3 Velocity { get; set; }
+    public float MaxSpeed { get; set; }
+
 	#endregion
 
 	#region Radius Distances
