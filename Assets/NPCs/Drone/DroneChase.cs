@@ -25,11 +25,9 @@ public class DroneChase : BaseState<Drone>
             return steerForce.normalized*NPC.MaxSpeed;
         */
 
-        /*
         steerForce += NPC.Steering.ArriveForce(destination);
         if (steerForce.sqrMagnitude > sqrMaxSpeed)
             return steerForce.normalized * NPC.MaxSpeed;
-        */
 
         steerForce += NPC.Steering.SeekForce(destination);
         if (steerForce.sqrMagnitude > sqrMaxSpeed)

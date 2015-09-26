@@ -26,7 +26,7 @@ public class DroneSteering : BaseSteering<Drone>
 
     public Vector3 ArriveForce(Vector3 position)
     {
-        var toPosition = npc.transform.position - position;
+        var toPosition = position - npc.transform.position;
         var distance = toPosition.magnitude;
         var deceleration = 0.6f;
         if (distance > 0f)
