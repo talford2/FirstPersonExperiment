@@ -3,6 +3,9 @@ using System.Collections;
 
 public class DroneAttack : BaseState<Drone>
 {
+	public float ShootTime = 0.4f;
+	private float shootCooldown = 0;
+
 	public DroneAttack(Drone npc) : base(npc)
 	{
 		Debug.Log("Attack");
@@ -21,6 +24,15 @@ public class DroneAttack : BaseState<Drone>
 		{
 			NPC.State = new DroneChase(NPC);
 		}
+
+		shootCooldown -= Time.deltaTime;
+		if (shootCooldown <= 0)
+		{
+			shootCooldown = ShootTime;
+			NPC.Muzzle.Flash();
+			NPC.ShootSound.Play();
+		}
+
 		base.Update();
 	}
 }

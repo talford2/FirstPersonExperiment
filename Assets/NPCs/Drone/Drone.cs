@@ -8,6 +8,8 @@ public class Drone : MonoBehaviour
 
 	public BaseState<Drone> State { get; set; }
 
+	public MuzzleFlash Muzzle;
+
 	public int Team
 	{
 		get
@@ -17,6 +19,8 @@ public class Drone : MonoBehaviour
 	}
 
 	public Transform Target;
+
+	public AudioSource ShootSound;
 
 	#region State Speeds
 
@@ -74,22 +78,22 @@ public class Drone : MonoBehaviour
 
 	#endregion
 
-    #region Detected Objects
+	#region Detected Objects
 
-    public List<Vector3> Obstacles { get; set; }
+	public List<Vector3> Obstacles { get; set; }
 
-    #endregion
+	#endregion
 
-    public DroneSteering Steering;
+	public DroneSteering Steering;
 
-    #region Private Methods
+	#region Private Methods
 
-    private void Awake()
+	private void Awake()
 	{
 		team = GetComponent<Targetable>().Team;
 		TargetingUtility.AddTarget(team, transform);
-        Obstacles = new List<Vector3>();
-        Steering = new DroneSteering(this);
+		Obstacles = new List<Vector3>();
+		Steering = new DroneSteering(this);
 	}
 
 	private void Start()
