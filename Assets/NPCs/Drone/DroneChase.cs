@@ -25,9 +25,11 @@ public class DroneChase : BaseState<Drone>
             return steerForce.normalized*NPC.MaxSpeed;
         */
 
+        /*
         steerForce += NPC.Steering.ArriveForce(destination);
         if (steerForce.sqrMagnitude > sqrMaxSpeed)
             return steerForce.normalized * NPC.MaxSpeed;
+        */
 
         steerForce += NPC.Steering.SeekForce(destination);
         if (steerForce.sqrMagnitude > sqrMaxSpeed)
@@ -45,19 +47,19 @@ public class DroneChase : BaseState<Drone>
 			NPC.State = new DroneIdle(NPC);
 		}
 
-		if (NPC.Target != null)
-		{
-			//NPC.transform.LookAt(NPC.Target);
-		    NPC.Velocity = GetSteeringForce();
-		    NPC.transform.position += NPC.Velocity*Time.deltaTime;
-			//NPC.transform.position += NPC.transform.forward * NPC.ChaseSpeed * Time.deltaTime;
+	    if (NPC.Target != null)
+	    {
+            NPC.Velocity += GetSteeringForce() * Time.deltaTime;
+            var rBody = NPC.GetComponent<Rigidbody>();
+            rBody.rotation = Quaternion.LookRotation(NPC.Target.position - NPC.transform.position);
+            rBody.position += NPC.Velocity * Time.deltaTime;
 
-			if (NPC.SqrTargetDistance <= NPC.SqrAttackRadius)
-			{
-				NPC.State = new DroneAttack(NPC);
-			}
-		}
+	        if (NPC.SqrTargetDistance <= NPC.SqrAttackRadius)
+	        {
+	            NPC.State = new DroneAttack(NPC);
+	        }
+	    }
 
-		base.Update();
+	    base.Update();
 	}
 }

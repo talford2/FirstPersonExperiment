@@ -34,7 +34,7 @@ public class DroneSteering : BaseSteering<Drone>
             var speed = distance/deceleration;
             speed = Mathf.Min(speed, npc.MaxSpeed);
             var desiredVelocity = toPosition*speed/distance;
-            return desiredVelocity- npc.Velocity;
+            return desiredVelocity - npc.Velocity;
         }
         return Vector3.zero;
     }
