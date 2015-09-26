@@ -1,21 +1,19 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DroneSteering : BaseSteering<Drone>
 {
     private readonly Drone npc;
 
-    public Vector3 ObstaclesAvoidForce(IEnumerable<Vector3> obstacles)
+    public Vector3 ObstaclesAvoidForce()
     {
-        var avoidSum = Vector3.zero;
-        /*
-        foreach (var obstacle in obstacles)
+        var checkRay = new Ray(npc.transform.position, npc.Velocity);
+        RaycastHit obstacleHit;
+        if (Physics.SphereCast(checkRay, 0.8f, out obstacleHit, npc.MaxSpeed, LayerMask.GetMask("Detect")))
         {
-            var fromObstacle = npc.transform.position - obstacle;
-            avoidSum += fromObstacle.normalized/fromObstacle.magnitude;
+            var desiredVelocity = npc.MaxSpeed*obstacleHit.normal*(1f + 1.6f)/obstacleHit.distance;
+            return desiredVelocity - npc.Velocity;
         }
-        */
-        return avoidSum;
+        return Vector3.zero;
     }
 
     public Vector3 SeekForce(Vector3 position)
