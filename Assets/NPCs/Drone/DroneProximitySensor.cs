@@ -26,7 +26,7 @@ public class DroneProximitySensor : MonoBehaviour
             }
             detectedColliders.Add(other);
             npc.Obstacles.Add(other.transform.position);
-            Debug.Log("DETECTED COUNT: " + detectedColliders.Count);
+            //Debug.Log("DETECTED COUNT: " + detectedColliders.Count);
         }
     }
 
@@ -34,6 +34,6 @@ public class DroneProximitySensor : MonoBehaviour
     {
         detectedColliders.Remove(other);
         npc.Obstacles.Remove(other.transform.position);
-        Debug.Log("DETECTED COUNT: " + detectedColliders.Count);
+        //Debug.Log("DETECTED COUNT: " + detectedColliders.Count);
     }
 }

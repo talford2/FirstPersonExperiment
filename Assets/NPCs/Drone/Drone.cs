@@ -27,15 +27,10 @@ public class Drone : MonoBehaviour
 	{
 		get
 		{
-			var mask = LayerMask.NameToLayer("Obstacles");
+			var mask = LayerMask.GetMask("Obstacles");
 			var r = Physics.OverlapSphere(transform.position, 300f, mask);
-			//var r = Physics.OverlapSphere(transform.position, 300f);
-
 			Debug.Log("obstacles = " + r.Length);
-			Debug.Break();
-
-			return null;
-			//return GameObject.FindObjectsOfType<IObstacleAvoidence>();
+			return r.Select(o => o.GetComponent<IObstacleAvoidance>());
 		}
 	}
 
@@ -124,7 +119,7 @@ public class Drone : MonoBehaviour
 
 	private void Update()
 	{
-		Obstactles.ToList().ForEach(o => o.ApplyForce(transform, 2));
+		Obstactles.ToList().ForEach(o => o.ApplyForce(transform, 1f));
 		State.Update();
 	}
 

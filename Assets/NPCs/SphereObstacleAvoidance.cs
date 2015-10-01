@@ -13,7 +13,22 @@ public class SphereObstacleAvoidance : MonoBehaviour, IObstacleAvoidance
 	{
 		get
 		{
-			return transform.position + Offset;
+			if (ControlTransform == null)
+			{
+				ControlTransform = transform;
+			}
+			return ControlTransform.position + Offset;
+		}
+	}
+
+	public Transform ControlTransform;
+
+
+	public void Awake()
+	{
+		if (ControlTransform == null)
+		{
+			ControlTransform = transform;
 		}
 	}
 
@@ -28,12 +43,14 @@ public class SphereObstacleAvoidance : MonoBehaviour, IObstacleAvoidance
 			// object is inside the radius and must be placed on the edge
 			if (d < Radius)
 			{
-				transObj.position = dir * Radius;
+				transObj.position = FinalPosition + dir * Radius;
 			}
 			else
 			{
 				var f = Radius + Falloff;
-				var frac = 1 - (f - d) / (f - Radius);
+				var frac = 1f - (f - d) / (f - Radius);
+
+				Debug.Log("frac = " + frac);
 				transObj.position += dir * frac * maxForce * Time.deltaTime;
 			}
 		}
