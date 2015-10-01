@@ -23,14 +23,20 @@ public class Drone : MonoBehaviour
 
 	public AudioSource ShootSound;
 
+
+	private IEnumerable<IObstacleAvoidance> obs;
 	public IEnumerable<IObstacleAvoidance> Obstactles
 	{
 		get
 		{
-			var mask = LayerMask.GetMask("Obstacles");
-			var r = Physics.OverlapSphere(transform.position, 300f, mask);
-			Debug.Log("obstacles = " + r.Length);
-			return r.Select(o => o.GetComponent<IObstacleAvoidance>());
+			if (obs == null)
+			{
+				var mask = LayerMask.GetMask("Obstacles");
+				var r = Physics.OverlapSphere(transform.position, 300f, mask);
+				Debug.Log("obstacles = " + r.Length);
+				obs = r.Select(o => o.GetComponent<IObstacleAvoidance>());
+			}
+			return obs;
 		}
 	}
 
