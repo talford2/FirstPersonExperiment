@@ -22,7 +22,7 @@ public class SphereObstacleAvoidance : MonoBehaviour, IObstacleAvoidance
 	}
 
 	public Transform ControlTransform;
-	
+
 	public void Awake()
 	{
 		if (ControlTransform == null)
@@ -33,22 +33,25 @@ public class SphereObstacleAvoidance : MonoBehaviour, IObstacleAvoidance
 
 	public void ApplyForce(Transform transObj, float maxForce, float radius = 0)
 	{
-		var distSqr = (FinalPosition - transObj.position).sqrMagnitude;
+		var toHit = transObj.position - FinalPosition;
+		var distSqr = toHit.sqrMagnitude;
 
-		if (distSqr < Mathf.Pow(Radius + Falloff, 2f))
+		var expandedRadius = (Radius + radius);
+		
+		if (distSqr < Mathf.Pow(expandedRadius + Falloff, 2f))
 		{
-			var dir = (transObj.position - FinalPosition).normalized;
+			var dir = toHit.normalized;
 
 			// object is inside the radius and must be placed on the edge
-			if (distSqr < Radius * Radius)
+			if (distSqr < expandedRadius * expandedRadius)
 			{
-				transObj.position = FinalPosition + dir * Radius;
+				transObj.position = FinalPosition + dir * expandedRadius;
 			}
 			else
 			{
-				var f = Mathf.Pow(Radius + Falloff, 2f);
-				var frac = (f - distSqr) / (f - Radius);
-				
+				var f = Mathf.Pow(expandedRadius + Falloff, 2f);
+				var frac = (f - distSqr) / (f - expandedRadius);
+
 				//Debug.Log("frac = " + frac);
 				transObj.position += dir * frac * maxForce * Time.deltaTime;
 			}

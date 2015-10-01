@@ -125,7 +125,7 @@ public class Drone : MonoBehaviour
 
 	private void Update()
 	{
-		Obstactles.ToList().ForEach(o => o.ApplyForce(transform, 1f));
+		Obstactles.ToList().ForEach(o => o.ApplyForce(transform, 3f, 2.41f));
 		State.Update();
 	}
 
