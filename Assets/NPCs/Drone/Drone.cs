@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(Targetable))]
 public class Drone : MonoBehaviour
@@ -22,14 +23,30 @@ public class Drone : MonoBehaviour
 
 	public AudioSource ShootSound;
 
+	public IEnumerable<IObstacleAvoidence> Obstactles
+	{
+		get
+		{
+			var mask = LayerMask.NameToLayer("Obstacles");
+			var r = Physics.OverlapSphere(transform.position, 300f, mask);
+			//var r = Physics.OverlapSphere(transform.position, 300f);
+
+			Debug.Log("obstacles = " + r.Length);
+			Debug.Break();
+
+			return null;
+			//return GameObject.FindObjectsOfType<IObstacleAvoidence>();
+		}
+	}
+
 	#region State Speeds
 
 	public float AttackCruiseSpeed = 0.5f;
 
 	public float ChaseSpeed = 2f;
 
-    public Vector3 Velocity { get; set; }
-    public float MaxSpeed { get; set; }
+	public Vector3 Velocity { get; set; }
+	public float MaxSpeed { get; set; }
 
 	#endregion
 
@@ -107,6 +124,7 @@ public class Drone : MonoBehaviour
 
 	private void Update()
 	{
+		Obstactles.ToList().ForEach(o => o.ApplyForce(transform, 2));
 		State.Update();
 	}
 
