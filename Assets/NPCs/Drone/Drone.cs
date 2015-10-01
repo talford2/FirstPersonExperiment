@@ -23,7 +23,7 @@ public class Drone : MonoBehaviour
 
 	public AudioSource ShootSound;
 
-	public IEnumerable<IObstacleAvoidence> Obstactles
+	public IEnumerable<IObstacleAvoidance> Obstactles
 	{
 		get
 		{

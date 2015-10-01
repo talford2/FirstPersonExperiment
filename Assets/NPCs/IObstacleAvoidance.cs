@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IObstacleAvoidence
+public interface IObstacleAvoidance
 {
 	void ApplyForce(Transform transObj, float maxForce);
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SphereObstacleAvoidance : MonoBehaviour, IObstacleAvoidence
+public class SphereObstacleAvoidance : MonoBehaviour, IObstacleAvoidance
 {
 	public float Radius = 1f;
 
